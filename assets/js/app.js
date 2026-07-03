@@ -243,6 +243,8 @@
   });
 
   // ------- Reveal on scroll (con transform/opacity, a11y) -------
+  // Threshold 0.25 + rootMargin -180px: el contenido aparece cuando
+  // ya estás bien adentro de la sección (zona de confort).
   if ('IntersectionObserver' in window) {
     const reveal = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -251,12 +253,33 @@
           reveal.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -120px 0px' });
+    }, { threshold: 0.25, rootMargin: '0px 0px -180px 0px' });
 
     // Aplicar a las secciones principales
     document.querySelectorAll('section').forEach(sec => {
       sec.classList.add('reveal');
       reveal.observe(sec);
+    });
+
+    // ------- Reveal para unidades semánticas -------
+    // h2, h3, p descriptivos, articles, fieldsets, botones CTA, nav links
+    // NO se anima cada input/label/opción individual (performance)
+    const semanticReveal = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          semanticReveal.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -100px 0px' });
+
+    document.querySelectorAll(
+      'section h2, section h3, section p, section article, section fieldset, ' +
+      'section .btn-primary, section a.btn, ' +
+      'header nav a'
+    ).forEach(el => {
+      el.classList.add('reveal-elem');
+      semanticReveal.observe(el);
     });
   }
 

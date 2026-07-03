@@ -105,10 +105,16 @@ html { scroll-behavior: smooth; }
 .floating-cta .btn-float {
   position: relative;
   overflow: hidden;
+  gap: 0.625rem;  /* 10px entre texto y flecha, evita que quede pegada */
+  padding-right: 1rem;  /* respiro derecho para la flecha */
   transition:
     transform 140ms var(--ease-out),
     padding   200ms var(--ease-out),
     background-color 140ms;
+}
+.floating-cta .btn-float > svg {
+  margin-left: 0.25rem;  /* respiro extra entre el texto y la flecha */
+  flex-shrink: 0;
 }
 .floating-cta .btn-float:hover {
   background-color: rgb(185 28 28);
@@ -183,6 +189,28 @@ html { scroll-behavior: smooth; }
 .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 360ms;  opacity: 1; transform: translateY(0); }
 .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 480ms;  opacity: 1; transform: translateY(0); }
 .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 600ms;  opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   REVEAL-ELEM — para unidades semánticas dentro de cada sección
+   (h2, h3, p, article, fieldset, btn, nav link)
+   Una sola vez. Sin re-animar al scroll reverso.
+   ============================================================ */
+.reveal-elem {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal-elem.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Header nav: solo aparece la primera vez (no re-animar entre páginas) */
+header nav a.reveal-elem {
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
 
 /* ============================================================
    HOVER/PRESS en cards — sutil, no exagerado
@@ -262,6 +290,7 @@ html { scroll-behavior: smooth; }
     scroll-behavior: auto !important;
   }
   .reveal,
+  .reveal-elem,
   .reveal-stagger > * {
     opacity: 1 !important;
     transform: none !important;

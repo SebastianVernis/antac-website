@@ -312,6 +312,103 @@
     }
   }, { passive: true });
 
+  // ------- Count-up para los stats del hero -------
+  // Anima el número desde 0 hasta data-target cuando entra en viewport
+  // Una sola vez. Ease-out. Respetar prefers-reduced-motion.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counters = document.querySelectorAll('.counter');
+
+  function formatNumber(n) {
+    // Para números grandes como 2847 → 2,847
+    return n.toLocaleString('es-MX');
+  }
+
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const prefix = el.dataset.prefix || '';
+    const duration = 1500;
+    if (prefersReducedMotion) {
+      el.textContent = prefix + formatNumber(target);
+      return;
+    }
+    const start = performance.now();
+    function step(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.floor(eased * target);
+      el.textContent = prefix + formatNumber(value);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + formatNumber(target);
+    }
+    requestAnimationFrame(step);
+  }
+
+  if ('IntersectionObserver' in window && counters.length > 0) {
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(c => counterObs.observe(c));
+  } else {
+    // Fallback: mostrar el valor final directo
+    counters.forEach(c => {
+      const target = parseInt(c.dataset.target, 10);
+      c.textContent = (c.dataset.prefix || '') + formatNumber(target);
+    });
+  }
+
+  // ------- Ripple effect en floating CTA -------
+  if (floatingCta) {
+    const btn = floatingCta.querySelector('.btn-float');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top  = (e.clientY - rect.top)  + 'px';
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 650);
+      });
+    }
+  }
+
+  // ------- Hero parallax sutil -------
+  // El badge y los stats se mueven más lento que el scroll (ratio 0.3-0.5)
+  // Solo en desktop (>= lg). Desactivado si prefers-reduced-motion.
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  if (isDesktop && !prefersReducedMotion) {
+    const heroBadge  = document.querySelector('#inicio .pill, #inicio [class*="pill"]');
+    const heroStats  = document.querySelector('#inicio dl');
+    const heroVisual = document.querySelector('#inicio img[alt*="transportistas" i], #inicio img[alt*="operador" i]');
+
+    function updateParallax() {
+      const y = window.scrollY;
+      if (y > 800) return;  // solo dentro del hero
+      if (heroBadge)  heroBadge.style.transform  = `translateY(${y * 0.15}px)`;
+      if (heroStats)  heroStats.style.transform  = `translateY(${y * 0.25}px)`;
+      if (heroVisual) heroVisual.style.transform = `translateY(${y * 0.08}px) scale(${1 - y * 0.0001})`;
+    }
+    let pTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!pTicking) {
+        window.requestAnimationFrame(() => {
+          updateParallax();
+          pTicking = false;
+        });
+        pTicking = true;
+      }
+    }, { passive: true });
+  }
+
   // ------- Toast (expuesto para forms.js) -------
   function showToast(msg, type) {
     const toast = document.getElementById('toast');

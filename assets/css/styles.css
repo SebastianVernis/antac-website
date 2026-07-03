@@ -16,11 +16,13 @@
   --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);  /* para microinteracciones del CTA */
 
   --dur-press:  120ms;
-  --dur-pop:    200ms;
+  --dur-pop:    220ms;
   --dur-modal:  300ms;
-  --dur-reveal: 600ms;
+  --dur-reveal: 800ms;
+  --dur-wobble: 700ms;
 }
 
 /* ---------- Tipografía base ---------- */
@@ -31,15 +33,20 @@ html { scroll-behavior: smooth; }
 /* ============================================================
    HEADER — slide up/down en scroll
    - translateY(-100%) al ocultar
-   - 200ms ease-out (CSS transition = interruptible)
+   - 240ms ease-out (CSS transition = interruptible)
    - Header tiene transform, no display:none (mantiene layout)
+   - Al volver a aparecer, micro-scale para que "llegue con peso"
    ============================================================ */
 .site-header {
-  transform: translateY(0);
-  transition: transform 220ms var(--ease-out);
+  transform: translateY(0) scale(1);
+  transition:
+    transform 240ms var(--ease-out),
+    opacity   240ms var(--ease-out);
+  opacity: 1;
 }
 .site-header.is-hidden {
-  transform: translateY(-100%);
+  transform: translateY(-100%) scale(0.98);
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -78,32 +85,83 @@ html { scroll-behavior: smooth; }
   opacity: 1;
 }
 @keyframes cta-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50%      { transform: scale(1.12); opacity: 0; }
+  0%, 100% { transform: scale(1);    opacity: 0.4; }
+  50%      { transform: scale(1.12); opacity: 0;   }
 }
 
-/* Press feedback en el botón (scale 0.97) */
+/* Wobble muy sutil cada ~7s (no mareante, solo da vida) */
+@keyframes cta-wobble {
+  0%, 88%, 100% { transform: translateY(0) scale(1)         rotate(0deg);   }
+  90%           { transform: translateY(0) scale(1.04)      rotate(-2deg);  }
+  93%           { transform: translateY(0) scale(1.04)      rotate(2deg);   }
+  96%           { transform: translateY(0) scale(1.04)      rotate(-1deg);  }
+}
+.floating-cta.is-visible .btn-float {
+  animation: cta-wobble 7s ease-in-out infinite;
+  animation-delay: 2.5s;  /* arranca después de 2.5s, da respiro al usuario */
+}
+
+/* Press feedback en el botón (scale 0.97) + hover expand */
 .floating-cta .btn-float {
-  transition: transform 120ms var(--ease-out), background-color 120ms;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 140ms var(--ease-out),
+    padding   200ms var(--ease-out),
+    background-color 140ms;
 }
 .floating-cta .btn-float:hover {
   background-color: rgb(185 28 28);
+  padding-right: 1.25rem;  /* crece un poco al hover */
 }
 .floating-cta .btn-float:active {
   transform: scale(0.97);
+}
+
+/* Texto secundario ("gratis") oculto, aparece al hover */
+.floating-cta .btn-text-secondary {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    max-width 220ms var(--ease-out),
+    opacity   180ms var(--ease-out);
+}
+.floating-cta .btn-float:hover .btn-text-secondary {
+  max-width: 5.5rem;  /* " gratis" */
+  opacity: 1;
+}
+
+/* Ripple effect al hacer click */
+.floating-cta .btn-float .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  animation: ripple-expand 600ms var(--ease-out) forwards;
+}
+@keyframes ripple-expand {
+  to {
+    transform: translate(-50%, -50%) scale(4);
+    opacity: 0;
+  }
 }
 
 /* ============================================================
    REVEAL — IntersectionObserver (transform/opacity)
    - Stagger via delay
    - Una sola vez (unobserve tras disparar)
+   - Más notorio: 800ms, translateY 24px, clip-path opcional
    ============================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
   transition:
-    opacity 600ms var(--ease-out),
-    transform 600ms var(--ease-out);
+    opacity 800ms var(--ease-out),
+    transform 800ms var(--ease-out);
   will-change: opacity, transform;
 }
 .reveal.is-visible {
@@ -111,30 +169,56 @@ html { scroll-behavior: smooth; }
   transform: translateY(0);
 }
 
-/* Stagger dentro de grids (1, 2, 3, 4 hijos) */
+/* Stagger dentro de grids (más notorio: 120ms entre items) */
 .reveal-stagger > * {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
   transition:
-    opacity 500ms var(--ease-out),
-    transform 500ms var(--ease-out);
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
 }
-.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms;   opacity: 1; transform: translateY(0); }
-.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 80ms;  opacity: 1; transform: translateY(0); }
-.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms;    opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 120ms;  opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 240ms;  opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 360ms;  opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 480ms;  opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 600ms;  opacity: 1; transform: translateY(0); }
 
 /* ============================================================
    HOVER/PRESS en cards — sutil, no exagerado
+   - Elevación + sombra + shine que cruza
    ============================================================ */
 .card-hover {
-  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out);
 }
 .card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -8px rgb(0 0 0 / 0.12);
+}
+
+/* Shine effect (pseudo-elemento que cruza en hover) */
+.card-hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  transition: left 700ms var(--ease-out);
+}
+.card-hover:hover::after {
+  left: 130%;
 }
 
 /* Focus visible consistente (a11y) */

@@ -1,25 +1,140 @@
 /* ==============================================================
    ANTAC - Custom styles
-   Complementa Tailwind. Solo animaciones, focus, motion, reveal.
+   Complementa Tailwind. Animaciones, a11y, reveal, header.
    Diseño: rojo primario + ámbar acento, zinc neutrals.
-   Principios: animate only transform/opacity, respetar
-   prefers-reduced-motion, focus visible consistente.
+   Principios (emilkowalski):
+   - Solo transform/opacity (perf)
+   - ease-out para entrar/salir
+   - Curvas fuertes (no easings built-in)
+   - UI < 300ms
+   - Animaciones interruptibles (CSS transitions, no @keyframes)
+   - prefers-reduced-motion respetado
    ============================================================== */
+
+/* ---------- Easings (curvas fuertes, no built-in) ---------- */
+:root {
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --dur-press:  120ms;
+  --dur-pop:    200ms;
+  --dur-modal:  300ms;
+  --dur-reveal: 600ms;
+}
 
 /* ---------- Tipografía base ---------- */
 * { font-family: 'Manrope', system-ui, sans-serif; }
 .font-serif { font-family: 'Bitter', Georgia, serif; }
 html { scroll-behavior: smooth; }
 
-/* Reveal en scroll — animación con transform/opacity (perf-friendly) */
+/* ============================================================
+   HEADER — slide up/down en scroll
+   - translateY(-100%) al ocultar
+   - 200ms ease-out (CSS transition = interruptible)
+   - Header tiene transform, no display:none (mantiene layout)
+   ============================================================ */
+.site-header {
+  transform: translateY(0);
+  transition: transform 220ms var(--ease-out);
+}
+.site-header.is-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   FLOATING CTA — Pop in con scale + translateY
+   - Empieza invisible (opacity 0, translateY 8px, scale 0.95)
+   - Aparece con .is-visible
+   - 250ms ease-out, interruptible
+   ============================================================ */
+.floating-cta {
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
+  pointer-events: none;
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+.floating-cta.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Pulse "breathing" sutil en el botón flotante (no molesto) */
+.floating-cta::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: rgba(220, 38, 38, 0.3);
+  z-index: -1;
+  animation: cta-pulse 2.4s ease-in-out infinite;
+  opacity: 0;
+}
+.floating-cta.is-visible::before {
+  opacity: 1;
+}
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50%      { transform: scale(1.12); opacity: 0; }
+}
+
+/* Press feedback en el botón (scale 0.97) */
+.floating-cta .btn-float {
+  transition: transform 120ms var(--ease-out), background-color 120ms;
+}
+.floating-cta .btn-float:hover {
+  background-color: rgb(185 28 28);
+}
+.floating-cta .btn-float:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   REVEAL — IntersectionObserver (transform/opacity)
+   - Stagger via delay
+   - Una sola vez (unobserve tras disparar)
+   ============================================================ */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+  will-change: opacity, transform;
 }
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Stagger dentro de grids (1, 2, 3, 4 hijos) */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms;   opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 80ms;  opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   HOVER/PRESS en cards — sutil, no exagerado
+   ============================================================ */
+.card-hover {
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
 }
 
 /* Focus visible consistente (a11y) */
@@ -45,27 +160,15 @@ html { scroll-behavior: smooth; }
   to { transform: rotate(360deg); }
 }
 
-/* Upload zone: cursor y feedback */
+/* Upload zone focus */
 .upload-zone:focus-visible {
   outline: 2px solid #DC2626;
   outline-offset: 2px;
 }
 
-/* Hover sutil en cards */
-.card-hover {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-}
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
-}
-
-/* Tabla sin estilos (compat) */
-table { border-collapse: collapse; width: 100%; }
-
 /* ============================================================
-   prefers-reduced-motion (a11y - taste §6.B, impeccable animate)
-   Desactivamos TODO lo decorativo. Mantenemos funcionalidad.
+   prefers-reduced-motion (a11y)
+   Desactivamos TODO lo decorativo, mantenemos funcionalidad.
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -74,11 +177,25 @@ table { border-collapse: collapse; width: 100%; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal {
+  .reveal,
+  .reveal-stagger > * {
     opacity: 1 !important;
     transform: none !important;
+  }
+  .site-header {
+    transform: none !important;
+  }
+  .floating-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .floating-cta::before {
+    animation: none !important;
   }
   .card-hover:hover {
     transform: none;
   }
 }
+
+/* Tabla sin estilos (compat) */
+table { border-collapse: collapse; width: 100%; }

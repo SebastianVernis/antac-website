@@ -260,6 +260,58 @@
     });
   }
 
+  // ------- Header hide/show en scroll -------
+  // (regla emilkowalski: 200-220ms ease-out, interruptible)
+  const siteHeader = document.querySelector('.site-header');
+  const floatingCta = document.getElementById('floating-cta');
+  let lastScrollY = 0;
+  const HIDE_THRESHOLD = 12;  // px de scroll down para ocultar
+  const SHOW_THRESHOLD = 4;   // px de scroll up para mostrar
+  const MIN_SHOW_PX = 80;     // a partir de este Y se permite ocultar
+
+  function updateHeader() {
+    const y = window.scrollY;
+    if (!siteHeader) return;
+    const delta = y - lastScrollY;
+
+    if (y <= MIN_SHOW_PX) {
+      // Cerca del top → header siempre visible, CTA oculto
+      siteHeader.classList.remove('is-hidden');
+      if (floatingCta) {
+        floatingCta.classList.remove('is-visible');
+        floatingCta.setAttribute('aria-hidden', 'true');
+      }
+    } else if (delta > HIDE_THRESHOLD) {
+      // Scroll down → ocultar header, mostrar floating CTA
+      siteHeader.classList.add('is-hidden');
+      if (floatingCta) {
+        floatingCta.classList.add('is-visible');
+        floatingCta.setAttribute('aria-hidden', 'false');
+      }
+    } else if (delta < -SHOW_THRESHOLD) {
+      // Scroll up → mostrar header, ocultar floating CTA
+      siteHeader.classList.remove('is-hidden');
+      if (floatingCta) {
+        floatingCta.classList.remove('is-visible');
+        floatingCta.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    lastScrollY = y;
+  }
+
+  // rAF para no spamear el reflow
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateHeader();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
   // ------- Toast (expuesto para forms.js) -------
   function showToast(msg, type) {
     const toast = document.getElementById('toast');

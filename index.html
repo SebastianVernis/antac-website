@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ANTAC - Asociación Nacional de Transportistas de Carga A.C. Defendemos los intereses del autotransporte de carga en México desde hace más de 15 años.">
+  <meta name="theme-color" content="#DC2626">
+  <title>ANTAC · Asociación Nacional de Transportistas de Carga A.C.</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ANTAC · Asociación Nacional de Transportistas de Carga A.C.">
+  <meta property="og:description" content="Defendemos los intereses del autotransporte de carga en México.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+
+  <!-- Preconnect externo (solo lo que sí usamos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Tipografía: Manrope (sans geométrica, carácter gremial/serio, NO Inter) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Bitter:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Iconos Lucide (respeto lo que ya había) -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+
+  <!-- Tailwind CDN (mismo stack) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Paleta primaria - rojo institucional
+            primary: {
+              50:  '#FEF2F2',
+              100: '#FEE2E2',
+              200: '#FECACA',
+              300: '#FCA5A5',
+              400: '#F87171',
+              500: '#EF4444',
+              600: '#DC2626',  // brand principal
+              700: '#B91C1C',
+              800: '#991B1B',
+              900: '#7F1D1D',
+              950: '#450A0A'
+            },
+            // Acento - ámbar carretera (señalización)
+            accent: {
+              50:  '#FFFBEB',
+              100: '#FEF3C7',
+              200: '#FDE68A',
+              300: '#FCD34D',
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+              800: '#92400E',
+              900: '#78350F'
+            },
+            // Neutrals - zinc (off-black, NO #000)
+            ink: {
+              50:  '#FAFAFA',
+              100: '#F4F4F5',
+              200: '#E4E4E7',
+              300: '#D4D4D8',
+              400: '#A1A1AA',
+              500: '#71717A',
+              600: '#52525B',
+              700: '#3F3F46',
+              800: '#27272A',
+              900: '#18181B',
+              950: '#09090B'
+            }
+          },
+          fontFamily: {
+            sans:  ['Manrope', 'system-ui', 'sans-serif'],
+            serif: ['Bitter', 'Georgia', 'serif']
+          },
+          fontSize: {
+            // Scale fluida para headings (taste typeset + typeset.md)
+            'display': 'clamp(2.25rem, 4.5vw + 1rem, 4.5rem)',  // 36-72
+            'h1':      'clamp(1.875rem, 3vw + 1rem, 3rem)',     // 30-48
+            'h2':      'clamp(1.5rem, 2vw + 1rem, 2.25rem)',    // 24-36
+            'h3':      'clamp(1.25rem, 1vw + 1rem, 1.5rem)'     // 20-24
+          },
+          maxWidth: {
+            'prose':   '68ch'    // 45-75 chars comfortable reading
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom CSS (animaciones, focus, motion) -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body class="bg-ink-50 text-ink-900 font-sans antialiased">
+
+  <!-- Skip link (a11y) -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-primary-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:shadow-lg">
+    Saltar al contenido principal
+  </a>
+
+  <!-- ============= NAV ============= -->
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-ink-200">
+    <nav class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-16 flex items-center justify-between" aria-label="Navegación principal">
+
+      <a href="#inicio" class="flex items-center gap-3 group" aria-label="ANTAC - Inicio">
+        <div class="w-10 h-10 rounded-lg bg-primary-600 flex items-center justify-center shadow-sm group-hover:bg-primary-700 transition-colors">
+          <span class="text-white font-bold text-lg">A</span>
+        </div>
+        <div class="leading-tight">
+          <div class="text-base font-bold text-ink-900">ANTAC</div>
+          <div class="text-[10px] font-medium text-ink-500 tracking-wider uppercase">Transportistas de Carga</div>
+        </div>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-1">
+        <li><a href="#quienes"   class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-primary-600 rounded-md transition-colors">Quiénes somos</a></li>
+        <li><a href="#historia"  class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-primary-600 rounded-md transition-colors">Historia</a></li>
+        <li><a href="#logros"    class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-primary-600 rounded-md transition-colors">Logros</a></li>
+        <li><a href="#beneficios" class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-primary-600 rounded-md transition-colors">Beneficios</a></li>
+        <li><a href="#unidades"  class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-primary-600 rounded-md transition-colors">Registro</a></li>
+        <li><a href="#contacto"  class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-primary-600 rounded-md transition-colors">Contacto</a></li>
+      </ul>
+
+      <a href="#afiliate" class="hidden sm:inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-4 py-2 rounded-md shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
+        Afiliarme
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+
+      <button id="mob-toggle" class="md:hidden p-2 -mr-2 text-ink-700" aria-label="Abrir menú" aria-expanded="false" aria-controls="mob-menu">
+        <i data-lucide="menu" class="w-6 h-6" aria-hidden="true"></i>
+      </button>
+    </nav>
+
+    <div id="mob-menu" class="md:hidden hidden border-t border-ink-200 bg-white">
+      <ul class="px-4 py-2 space-y-1">
+        <li><a href="#quienes"   class="block px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 rounded-md">Quiénes somos</a></li>
+        <li><a href="#historia"  class="block px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 rounded-md">Historia</a></li>
+        <li><a href="#logros"    class="block px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 rounded-md">Logros</a></li>
+        <li><a href="#beneficios" class="block px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 rounded-md">Beneficios</a></li>
+        <li><a href="#unidades"  class="block px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 rounded-md">Registro</a></li>
+        <li><a href="#contacto"  class="block px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 rounded-md">Contacto</a></li>
+        <li class="pt-2"><a href="#afiliate" class="block bg-primary-600 text-white text-sm font-semibold text-center px-4 py-2.5 rounded-md">Afiliarme</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============= HERO ============= -->
+    <section id="inicio" class="relative overflow-hidden bg-ink-900 text-white">
+      <!-- Fondo sutil con gradiente (sin imagen pesada) -->
+      <div class="absolute inset-0 bg-gradient-to-br from-ink-950 via-ink-900 to-primary-950" aria-hidden="true"></div>
+      <!-- Patrón de líneas decorativas (carreteras) -->
+      <div class="absolute inset-0 opacity-[0.04]" aria-hidden="true">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+      </div>
+
+      <div class="relative max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 lg:py-32">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-7">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-600/15 border border-primary-500/30 text-primary-300 text-xs font-semibold mb-6">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary-500" aria-hidden="true"></span>
+              Más de 15 años defendiendo al transportista
+            </div>
+
+            <h1 class="font-serif font-bold text-display leading-[1.05] tracking-tight mb-6">
+              Defendemos los intereses del <span class="text-primary-400">transporte de carga</span> en México
+            </h1>
+
+            <p class="text-lg text-ink-300 max-w-prose mb-8 leading-relaxed">
+              Somos la asociación civil que agrupa a operadores y permisionarios del autotransporte federal de carga. Brindamos asesoría legal, representación gremial y protección operativa a quienes mueven la economía del país.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="#afiliate" class="inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md shadow-lg shadow-primary-900/30 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500">
+                Quiero afiliarme
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+              <a href="#quienes" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white font-semibold px-6 py-3 rounded-md border border-white/20 transition-colors">
+                Conoce nuestra labor
+              </a>
+            </div>
+
+            <!-- Trust strip -->
+            <dl class="mt-12 grid grid-cols-3 gap-6 max-w-lg">
+              <div>
+                <dt class="text-xs text-ink-400 uppercase tracking-wider">Años</dt>
+                <dd class="text-2xl font-bold text-white mt-1">+15</dd>
+              </div>
+              <div>
+                <dt class="text-xs text-ink-400 uppercase tracking-wider">Agremiados</dt>
+                <dd class="text-2xl font-bold text-white mt-1">2,847</dd>
+              </div>
+              <div>
+                <dt class="text-xs text-ink-400 uppercase tracking-wider">Estados</dt>
+                <dd class="text-2xl font-bold text-white mt-1">24</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Visual: hero con imagen optimizada, animación SUBTIL (no ken-burns) -->
+          <div class="lg:col-span-5">
+            <div class="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+              <img
+                src="assets/img/hero-transportistas.jpg"
+                alt="Operador de transporte de carga mexicano en carretera"
+                width="1536"
+                height="1024"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                class="w-full h-full object-cover">
+              <!-- Badge flotante (con identidad de marca) -->
+              <div class="absolute bottom-4 left-4 right-4 bg-ink-950/80 backdrop-blur-md rounded-lg px-4 py-3 border border-white/10">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+                  </div>
+                  <div class="leading-tight">
+                    <div class="text-sm font-semibold text-white">Representación legal</div>
+                    <div class="text-xs text-ink-300">Ante SCT, CAPUFE y autoridades federales</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= QUIÉNES SOMOS ============= -->
+    <section id="quienes" class="py-24 lg:py-32 bg-white">
+      <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="max-w-3xl xl:max-w-4xl mb-16">
+          <div class="text-sm font-bold text-primary-600 uppercase tracking-wider mb-3">Quiénes somos</div>
+          <h2 class="font-serif font-bold text-h1 text-ink-900 leading-tight tracking-tight mb-6">
+            Una asociación al servicio del transportista
+          </h2>
+          <p class="text-lg text-ink-600 leading-relaxed max-w-prose">
+            ANTAC es una Asociación Civil Mexicana constituida formalmente, integrada por operadores, permisionarios y propietarios del autotransporte federal de carga. Trabajamos en tres ejes que sostienen nuestro compromiso gremial.
+          </p>
+        </div>
+
+        <!-- 3 cards ASIMÉTRICAS (no 3-column equal, anti-AI tell) -->
+        <div class="grid lg:grid-cols-12 gap-6">
+          <!-- Card grande -->
+          <article class="lg:col-span-7 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl p-8 lg:p-10 text-white relative overflow-hidden">
+            <div class="absolute -right-8 -top-8 w-48 h-48 rounded-full bg-white/5" aria-hidden="true"></div>
+            <div class="relative">
+              <div class="w-12 h-12 rounded-lg bg-white/15 flex items-center justify-center mb-6">
+                <i data-lucide="scale" class="w-6 h-6"></i>
+              </div>
+              <h3 class="text-h3 font-bold mb-3">Código de Ética</h3>
+              <p class="text-primary-100 leading-relaxed mb-6 max-w-prose">
+                Operamos con transparencia, rendición de cuentas y respeto irrestricto a los principios gremiales. Toda decisión directiva se somete a asamblea y queda asentada en acta pública.
+              </p>
+              <button class="modal-trigger inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent-300 transition-colors" data-modal="etica">
+                Leer código completo
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </article>
+
+          <!-- 2 cards chicas apiladas -->
+          <div class="lg:col-span-5 grid gap-6">
+            <article class="bg-ink-50 border border-ink-200 rounded-2xl p-8 hover:border-ink-300 transition-colors">
+              <div class="w-12 h-12 rounded-lg bg-accent-100 flex items-center justify-center mb-6">
+                <i data-lucide="book-open" class="w-6 h-6 text-accent-700"></i>
+              </div>
+              <h3 class="text-h3 font-bold text-ink-900 mb-3">Marco Legal y Normativo</h3>
+              <p class="text-ink-600 leading-relaxed mb-4">
+                Constitución, Ley de Caminos, Puentes y Autotransporte Federal, Reglamento y NOMs aplicables al sector.
+              </p>
+              <button class="modal-trigger inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors" data-modal="legal">
+                Ver marco
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </button>
+            </article>
+
+            <article class="bg-ink-50 border border-ink-200 rounded-2xl p-8 hover:border-ink-300 transition-colors">
+              <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center mb-6">
+                <i data-lucide="users" class="w-6 h-6 text-primary-700"></i>
+              </div>
+              <h3 class="text-h3 font-bold text-ink-900 mb-3">Estructura Organizacional</h3>
+              <p class="text-ink-600 leading-relaxed mb-4">
+                Mesa directiva, consejo de vigilancia, delegados estatales y comisiones de trabajo operativas.
+              </p>
+              <button class="modal-trigger inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors" data-modal="estructura">
+                Ver organigrama
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </button>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= HISTORIA ============= -->
+    <section id="historia" class="py-24 lg:py-32 bg-ink-50">
+      <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          <!-- Imagen a la izquierda (zig-zag con #quienes y #logros) -->
+          <div class="lg:col-span-5 order-2 lg:order-1">
+            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl ring-1 ring-ink-200">
+              <img
+                src="assets/img/historia-carreteras.jpg"
+                alt="Carreteras federales de México"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 order-1 lg:order-2">
+            <div class="text-sm font-bold text-primary-600 uppercase tracking-wider mb-3">Historia</div>
+            <h2 class="font-serif font-bold text-h1 text-ink-900 leading-tight tracking-tight mb-6">
+              Más de 15 años luchando por el transporte de carga
+            </h2>
+            <p class="text-lg text-ink-600 leading-relaxed mb-6 max-w-prose">
+              ANTAC nació en 2009 de la unión de pequeños permisionarios que enfrentaban abuso en casetas, cobros discrecionales y robos sistemáticos sin respuesta institucional. Hoy somos una asociación con presencia en 24 estados, 2,847 agremiados y representación formal ante la SCT, CAPUFE y la Cámara de Diputados.
+            </p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-primary-600 shrink-0 mt-0.5"></i>
+                <span class="text-ink-700">Representación legal activa en 47 juicios de amparo colectivos desde 2018.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-primary-600 shrink-0 mt-0.5"></i>
+                <span class="text-ink-700">Convenios con aseguradoras para pólizas de carga con descuento gremial.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-primary-600 shrink-0 mt-0.5"></i>
+                <span class="text-ink-700">Participación en 11 mesas de trabajo con la SCT y la Subsecretaría de Transporte.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= LOGROS ============= -->
+    <section id="logros" class="py-24 lg:py-32 bg-white">
+      <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="max-w-3xl xl:max-w-4xl mb-16">
+          <div class="text-sm font-bold text-primary-600 uppercase tracking-wider mb-3">Logros</div>
+          <h2 class="font-serif font-bold text-h1 text-ink-900 leading-tight tracking-tight mb-6">
+            Resultados que respaldan nuestra lucha
+          </h2>
+          <p class="text-lg text-ink-600 leading-relaxed max-w-prose">
+            No hablamos de promesas. Estos son los proyectos concretados y los reconocimientos obtenidos por la gestión gremial de ANTAC ante autoridades e instituciones del sector.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Proyectos -->
+          <div>
+            <h3 class="text-h3 font-bold text-ink-900 mb-6 flex items-center gap-2">
+              <i data-lucide="flag" class="w-5 h-5 text-primary-600"></i>
+              Proyectos Realizados
+            </h3>
+            <ul class="space-y-4">
+              <li class="flex gap-4 p-5 bg-ink-50 rounded-xl border border-ink-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold shrink-0">1</div>
+                <div>
+                  <h4 class="font-semibold text-ink-900 mb-1">Amparo vs. Verificación Aleatoria</h4>
+                  <p class="text-sm text-ink-600 leading-relaxed">Suspensión judicial de verificaciones sin causa justificada en 4 entidades. 1,184 agremiados protegidos.</p>
+                </div>
+              </li>
+              <li class="flex gap-4 p-5 bg-ink-50 rounded-xl border border-ink-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold shrink-0">2</div>
+                <div>
+                  <h4 class="font-semibold text-ink-900 mb-1">Convenio Marco de Seguros de Carga</h4>
+                  <p class="text-sm text-ink-600 leading-relaxed">Pólizas colectivas con tres aseguradoras nacionales, descuentos del 23% al 41% según cobertura.</p>
+                </div>
+              </li>
+              <li class="flex gap-4 p-5 bg-ink-50 rounded-xl border border-ink-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-600 text-white flex items-center justify-center font-bold shrink-0">3</div>
+                <div>
+                  <h4 class="font-semibold text-ink-900 mb-1">Plataforma Tecnológica ANTAC-Fleet</h4>
+                  <p class="text-sm text-ink-600 leading-relaxed">Sistema de gestión documental, seguimiento de unidades y directorio gremial. 1,072 operadores dados de alta.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Reconocimientos -->
+          <div>
+            <h3 class="text-h3 font-bold text-ink-900 mb-6 flex items-center gap-2">
+              <i data-lucide="award" class="w-5 h-5 text-accent-600"></i>
+              Reconocimientos Obtenidos
+            </h3>
+            <ul class="space-y-4">
+              <li class="flex gap-4 p-5 bg-accent-50 rounded-xl border border-accent-200">
+                <i data-lucide="medal" class="w-6 h-6 text-accent-700 shrink-0 mt-0.5"></i>
+                <div>
+                  <h4 class="font-semibold text-ink-900 mb-1">Mención Honorífica — Cámara de Diputados</h4>
+                  <p class="text-sm text-ink-600">Por la defensa de los derechos de los permisionarios del autotransporte federal. Sesión ordinaria, marzo 2023.</p>
+                </div>
+              </li>
+              <li class="flex gap-4 p-5 bg-accent-50 rounded-xl border border-accent-200">
+                <i data-lucide="medal" class="w-6 h-6 text-accent-700 shrink-0 mt-0.5"></i>
+                <div>
+                  <h4 class="font-semibold text-ink-900 mb-1">Premio CANACAR a la Gestión Gremial 2022</h4>
+                  <p class="text-sm text-ink-600">Cámara Nacional del Autotransporte de Carga. Categoría "Asociación Civil del Año".</p>
+                </div>
+              </li>
+              <li class="flex gap-4 p-5 bg-accent-50 rounded-xl border border-accent-200">
+                <i data-lucide="medal" class="w-6 h-6 text-accent-700 shrink-0 mt-0.5"></i>
+                <div>
+                  <h4 class="font-semibold text-ink-900 mb-1">Aliado Estratégico SCT 2020-2024</h4>
+                  <p class="text-sm text-ink-600">Reconocimiento de la Subsecretaría de Transporte por la participación en mesas de trabajo para la actualización del Reglamento de Autotransporte.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= BENEFICIOS ============= -->
+    <section id="beneficios" class="py-24 lg:py-32 bg-ink-50">
+      <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="max-w-3xl xl:max-w-4xl mb-16">
+          <div class="text-sm font-bold text-primary-600 uppercase tracking-wider mb-3">Membresía</div>
+          <h2 class="font-serif font-bold text-h1 text-ink-900 leading-tight tracking-tight mb-6">
+            Ventajas exclusivas de ser parte de ANTAC
+          </h2>
+          <p class="text-lg text-ink-600 leading-relaxed max-w-prose">
+            La membresía no es un gasto, es un blindaje operativo para tu unidad, tu permiso y tu patrimonio. Estos son los tres pilares de protección gremial.
+          </p>
+        </div>
+
+        <!-- Bento grid asimétrico (anti 3-column equal) -->
+        <div class="grid lg:grid-cols-3 lg:grid-rows-2 gap-6">
+          <!-- Bento 1: grande horizontal -->
+          <article class="lg:col-span-2 lg:row-span-1 bg-white border border-ink-200 rounded-2xl p-8 hover:border-primary-300 transition-colors">
+            <div class="flex items-start gap-6">
+              <div class="w-14 h-14 rounded-xl bg-primary-600 flex items-center justify-center shrink-0">
+                <i data-lucide="gavel" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <h3 class="text-h3 font-bold text-ink-900 mb-3">Amparo vs. Verificación Aleatoria</h3>
+                <p class="text-ink-600 leading-relaxed mb-4 max-w-prose">
+                  Cuando una patrulla detenga tu unidad sin causa justificada, la representación legal de ANTAC interviene de inmediato. Cubrimos gastos de amparo, defensa y, de proceder, la indemnización correspondiente.
+                </p>
+                <ul class="text-sm text-ink-700 space-y-1.5">
+                  <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-primary-600"></i>Defensa legal en flagrancia, las 24 hrs</li>
+                  <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-primary-600"></i>Cobertura nacional, 24 estados</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <!-- Bento 2: chico vertical -->
+          <article class="lg:col-span-1 lg:row-span-2 bg-ink-900 text-white rounded-2xl p-8 relative overflow-hidden">
+            <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-primary-600/30 blur-2xl" aria-hidden="true"></div>
+            <div class="relative">
+              <div class="w-14 h-14 rounded-xl bg-accent-500 flex items-center justify-center mb-6">
+                <i data-lucide="shield" class="w-7 h-7 text-ink-900"></i>
+              </div>
+              <h3 class="text-h3 font-bold mb-3">Seguros de Carga</h3>
+              <p class="text-ink-300 leading-relaxed mb-6">
+                Acceso a pólizas colectivas negociadas con tres aseguradoras nacionales. Coberturas desde RC hasta seguro total de la unidad y la carga.
+              </p>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between border-b border-ink-700 pb-2">
+                  <span class="text-ink-400">Carga general</span>
+                  <span class="font-semibold">-31%</span>
+                </div>
+                <div class="flex justify-between border-b border-ink-700 pb-2">
+                  <span class="text-ink-400">Materiales peligrosos</span>
+                  <span class="font-semibold">-23%</span>
+                </div>
+                <div class="flex justify-between border-b border-ink-700 pb-2">
+                  <span class="text-ink-400">Unidad + carga</span>
+                  <span class="font-semibold text-accent-400">-41%</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Bento 3: medio -->
+          <article class="lg:col-span-2 lg:row-span-1 bg-white border border-ink-200 rounded-2xl p-8 hover:border-primary-300 transition-colors">
+            <div class="flex items-start gap-6">
+              <div class="w-14 h-14 rounded-xl bg-accent-500 flex items-center justify-center shrink-0">
+                <i data-lucide="smartphone" class="w-7 h-7 text-ink-900"></i>
+              </div>
+              <div>
+                <h3 class="text-h3 font-bold text-ink-900 mb-3">Tecnología Digital para Agremiados</h3>
+                <p class="text-ink-600 leading-relaxed max-w-prose">
+                  Acceso a ANTAC-Fleet: app móvil y panel web para gestionar documentos de la unidad, vencimientos, directorio gremial, alerta de robos y seguimiento de amparos activos.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= REGISTRO DE UNIDADES Y OPERADORES ============= -->
+    <section id="unidades" class="py-24 lg:py-32 bg-white">
+      <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="max-w-3xl xl:max-w-4xl mb-12">
+          <div class="text-sm font-bold text-primary-600 uppercase tracking-wider mb-3">Registro gremial</div>
+          <h2 class="font-serif font-bold text-h1 text-ink-900 leading-tight tracking-tight mb-6">
+            Registro de Unidades y Operadores
+          </h2>
+          <p class="text-lg text-ink-600 leading-relaxed max-w-prose">
+            Si ya eres agremiado, registra tu unidad y tus operadores para activar la protección gremial completa. Los datos se envían de forma segura al equipo de validación documental.
+          </p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b border-ink-200 mb-8" role="tablist">
+          <div class="flex gap-1">
+            <button role="tab" aria-selected="true" data-tab="unidad" class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-primary-600 text-primary-600 -mb-px transition-colors">
+              <i data-lucide="truck" class="w-4 h-4 inline-block mr-2 -mt-0.5"></i>
+              Registro de Unidades
+            </button>
+            <button role="tab" aria-selected="false" data-tab="operador" class="tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-ink-600 hover:text-ink-900 -mb-px transition-colors">
+              <i data-lucide="user" class="w-4 h-4 inline-block mr-2 -mt-0.5"></i>
+              Registro de Operadores
+            </button>
+          </div>
+        </div>
+
+        <!-- Panel Unidad -->
+        <div id="tab-unidad" class="tab-panel" role="tabpanel">
+          <form id="form-unidad" class="grid md:grid-cols-2 gap-6 max-w-4xl" novalidate>
+            <div class="md:col-span-2">
+              <h3 class="text-h3 font-bold text-ink-900">Datos del propietario</h3>
+            </div>
+            <div>
+              <label for="un-propietario" class="block text-sm font-medium text-ink-700 mb-1.5">Nombre completo *</label>
+              <input id="un-propietario" name="propietario" type="text" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="un-tipo" class="block text-sm font-medium text-ink-700 mb-1.5">Tipo de unidad *</label>
+              <select id="un-tipo" name="tipo_unidad" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+                <option value="">Selecciona…</option>
+                <option value="tractocamion">Tractocamión</option>
+                <option value="camion-rigido">Camión rígido</option>
+                <option value="rabon">Rabón</option>
+                <option value="torton">Tortón</option>
+                <option value="camioneta">Camioneta 3.5 ton</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2 mt-4">
+              <h3 class="text-h3 font-bold text-ink-900">Datos de la unidad</h3>
+            </div>
+            <div>
+              <label for="un-placa" class="block text-sm font-medium text-ink-700 mb-1.5">Placa *</label>
+              <input id="un-placa" name="placa" type="text" required placeholder="Ej: ABC-123-A"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors uppercase">
+            </div>
+            <div>
+              <label for="un-vin" class="block text-sm font-medium text-ink-700 mb-1.5">VIN (Número de Serie) *</label>
+              <input id="un-vin" name="vin" type="text" required minlength="17" maxlength="17" placeholder="17 caracteres"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors uppercase">
+            </div>
+            <div>
+              <label for="un-marca" class="block text-sm font-medium text-ink-700 mb-1.5">Marca</label>
+              <input id="un-marca" name="marca" type="text" placeholder="Ej: Freightliner"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="un-modelo" class="block text-sm font-medium text-ink-700 mb-1.5">Modelo</label>
+              <input id="un-modelo" name="modelo" type="text" placeholder="Ej: Cascadia 2022"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+
+            <!-- Documentos -->
+            <div class="md:col-span-2 mt-4">
+              <h3 class="text-h3 font-bold text-ink-900">Documentos requeridos</h3>
+              <p class="text-sm text-ink-600 mt-1">PDF, JPG o PNG. Máx. 10 MB por archivo. No se adjuntan al correo, solo se listan para seguimiento.</p>
+            </div>
+
+            <div class="md:col-span-2 grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Tarjeta de circulación *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir tarjeta de circulación">
+                  <input type="file" name="doc_tarjeta-circulacion" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Póliza de seguro RC *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir póliza de seguro">
+                  <input type="file" name="doc_seguro-rc" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Permiso SCT vigente *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir permiso SCT">
+                  <input type="file" name="doc_permisos-sct" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Última verificación *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir verificación">
+                  <input type="file" name="doc_verificaciones" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="md:col-span-2 mt-2">
+              <!-- Honeypot anti-spam -->
+              <input type="text" name="botcheck" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+              <button type="submit" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
+                Enviar registro de unidad
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Panel Operador -->
+        <div id="tab-operador" class="tab-panel hidden" role="tabpanel">
+          <form id="form-operador" class="grid md:grid-cols-2 gap-6 max-w-4xl" novalidate>
+            <div class="md:col-span-2">
+              <h3 class="text-h3 font-bold text-ink-900">Datos del operador</h3>
+            </div>
+            <div>
+              <label for="op-nombre" class="block text-sm font-medium text-ink-700 mb-1.5">Nombre(s) *</label>
+              <input id="op-nombre" name="nombre" type="text" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="op-apellidos" class="block text-sm font-medium text-ink-700 mb-1.5">Apellidos *</label>
+              <input id="op-apellidos" name="apellidos" type="text" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="op-curp" class="block text-sm font-medium text-ink-700 mb-1.5">CURP *</label>
+              <input id="op-curp" name="curp" type="text" required minlength="18" maxlength="18" placeholder="18 caracteres"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors uppercase">
+            </div>
+            <div>
+              <label for="op-telefono" class="block text-sm font-medium text-ink-700 mb-1.5">Teléfono *</label>
+              <input id="op-telefono" name="telefono" type="tel" required placeholder="+52 55 1234 5678"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="op-email" class="block text-sm font-medium text-ink-700 mb-1.5">Correo electrónico</label>
+              <input id="op-email" name="email" type="email"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="op-unidad" class="block text-sm font-medium text-ink-700 mb-1.5">Unidad asignada (placa)</label>
+              <input id="op-unidad" name="unidad_asignada" type="text" placeholder="Opcional"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors uppercase">
+            </div>
+
+            <div class="md:col-span-2 mt-4">
+              <h3 class="text-h3 font-bold text-ink-900">Documentos requeridos</h3>
+            </div>
+            <div class="md:col-span-2 grid sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Licencia federal *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir licencia federal">
+                  <input type="file" name="doc_licencia-federal" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Examen médico vigente *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir examen médico">
+                  <input type="file" name="doc_examen-medico" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-ink-700 mb-1.5">Baja o vigencia IMSS *</label>
+                <div class="upload-zone border-2 border-dashed border-ink-300 rounded-lg p-4 text-center hover:border-primary-500 transition-colors cursor-pointer" tabindex="0" role="button" aria-label="Subir IMSS">
+                  <input type="file" name="doc_baja-imss" accept=".pdf,.jpg,.jpeg,.png" required class="hidden">
+                  <div class="upload-placeholder">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto text-ink-400 mb-1"></i>
+                    <div class="text-xs text-ink-600">Subir archivo</div>
+                  </div>
+                  <div class="upload-success hidden text-sm font-semibold text-primary-700">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 inline-block mr-1"></i>
+                    <span class="file-name">archivo.pdf</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="md:col-span-2 mt-2">
+              <input type="text" name="botcheck" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+              <button type="submit" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
+                Enviar registro de operador
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= AFILIACIÓN ============= -->
+    <section id="afiliate" class="py-24 lg:py-32 bg-ink-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-30" aria-hidden="true">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary-600/20 blur-3xl"></div>
+      </div>
+
+      <div class="relative max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="max-w-3xl xl:max-w-4xl mb-16">
+          <div class="text-sm font-bold text-accent-400 uppercase tracking-wider mb-3">Afiliación</div>
+          <h2 class="font-serif font-bold text-h1 leading-tight tracking-tight mb-6">
+            Únete a ANTAC y protege tu operación
+          </h2>
+          <p class="text-lg text-ink-300 leading-relaxed max-w-prose">
+            La membresía tiene una cuota mensual accesible y se activa en 24 hrs hábiles tras la validación documental. Estos son los requisitos y los montos vigentes para 2026.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6 mb-16">
+          <!-- Requisitos -->
+          <div class="lg:col-span-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+            <h3 class="text-h3 font-bold mb-6 flex items-center gap-2">
+              <i data-lucide="clipboard-list" class="w-5 h-5 text-accent-400"></i>
+              Requisitos de Afiliación
+            </h3>
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-accent-500 text-ink-900 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <div>
+                  <div class="font-semibold">Identificación oficial vigente</div>
+                  <div class="text-sm text-ink-400">INE/IFE, pasaporte o cédula profesional</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-accent-500 text-ink-900 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <div>
+                  <div class="font-semibold">Permiso SCT para autotransporte federal</div>
+                  <div class="text-sm text-ink-400">Vigente y a nombre del solicitante o razón social</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-accent-500 text-ink-900 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <div>
+                  <div class="font-semibold">Tarjeta de circulación y póliza de seguro</div>
+                  <div class="text-sm text-ink-400">De al menos una unidad a su nombre o de la razón social</div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-accent-500 text-ink-900 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                <div>
+                  <div class="font-semibold">RFC y comprobante de domicilio</div>
+                  <div class="text-sm text-ink-400">No mayor a 3 meses de antigüedad</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Cuotas -->
+          <div class="bg-primary-600 rounded-2xl p-8 relative overflow-hidden">
+            <div class="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-white/10" aria-hidden="true"></div>
+            <div class="relative">
+              <h3 class="text-h3 font-bold mb-6 flex items-center gap-2">
+                <i data-lucide="badge-dollar-sign" class="w-5 h-5"></i>
+                Cuotas 2026
+              </h3>
+              <div class="space-y-4">
+                <div class="pb-4 border-b border-white/20">
+                  <div class="text-xs text-primary-100 uppercase tracking-wider">Operador individual</div>
+                  <div class="text-3xl font-bold mt-1">$480<span class="text-base font-normal text-primary-100">/mes</span></div>
+                </div>
+                <div class="pb-4 border-b border-white/20">
+                  <div class="text-xs text-primary-100 uppercase tracking-wider">Permisionario (1-3 unidades)</div>
+                  <div class="text-3xl font-bold mt-1">$1,150<span class="text-base font-normal text-primary-100">/mes</span></div>
+                </div>
+                <div>
+                  <div class="text-xs text-primary-100 uppercase tracking-wider">Empresa (4+ unidades)</div>
+                  <div class="text-3xl font-bold mt-1">$2,400<span class="text-base font-normal text-primary-100">/mes</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white text-ink-900 rounded-2xl p-8 lg:p-10 shadow-2xl">
+          <h3 class="text-h3 font-bold text-ink-900 mb-2">Formulario de Afiliación</h3>
+          <p class="text-ink-600 mb-8">Completa el formulario. El equipo de afiliaciones te contactará en menos de 24 hrs hábiles.</p>
+
+          <form id="form-afiliacion" class="grid md:grid-cols-2 gap-6" novalidate>
+            <div>
+              <label for="af-nombre" class="block text-sm font-medium text-ink-700 mb-1.5">Nombre(s) *</label>
+              <input id="af-nombre" name="nombre" type="text" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="af-apellidos" class="block text-sm font-medium text-ink-700 mb-1.5">Apellidos *</label>
+              <input id="af-apellidos" name="apellidos" type="text" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="af-email" class="block text-sm font-medium text-ink-700 mb-1.5">Correo electrónico *</label>
+              <input id="af-email" name="email" type="email" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="af-telefono" class="block text-sm font-medium text-ink-700 mb-1.5">Teléfono *</label>
+              <input id="af-telefono" name="telefono" type="tel" required placeholder="+52 55 1234 5678"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
+            </div>
+            <div>
+              <label for="af-rfc" class="block text-sm font-medium text-ink-700 mb-1.5">RFC *</label>
+              <input id="af-rfc" name="rfc" type="text" required minlength="12" maxlength="13" placeholder="12 o 13 caracteres"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors uppercase">
+            </div>
+            <div>
+              <label for="af-estado" class="block text-sm font-medium text-ink-700 mb-1.5">Estado *</label>
+              <select id="af-estado" name="estado" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+                <option value="">Selecciona…</option>
+                <option>Aguascalientes</option><option>Baja California</option><option>Baja California Sur</option>
+                <option>Campeche</option><option>Chiapas</option><option>Chihuahua</option>
+                <option>Ciudad de México</option><option>Coahuila</option><option>Colima</option>
+                <option>Durango</option><option>Guanajuato</option><option>Guerrero</option>
+                <option>Hidalgo</option><option>Jalisco</option><option>México</option>
+                <option>Michoacán</option><option>Morelos</option><option>Nayarit</option>
+                <option>Nuevo León</option><option>Oaxaca</option><option>Puebla</option>
+                <option>Querétaro</option><option>Quintana Roo</option><option>San Luis Potosí</option>
+                <option>Sinaloa</option><option>Sonora</option><option>Tabasco</option>
+                <option>Tamaulipas</option><option>Tlaxcala</option><option>Veracruz</option>
+                <option>Yucatán</option><option>Zacatecas</option>
+              </select>
+            </div>
+            <div>
+              <label for="af-unidades" class="block text-sm font-medium text-ink-700 mb-1.5">Número de unidades *</label>
+              <select id="af-unidades" name="unidades" required
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+                <option value="">Selecciona…</option>
+                <option value="1">1 unidad</option>
+                <option value="2-3">2 a 3 unidades</option>
+                <option value="4-10">4 a 10 unidades</option>
+                <option value="11+">11 o más</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label for="af-comentarios" class="block text-sm font-medium text-ink-700 mb-1.5">Comentarios (opcional)</label>
+              <textarea id="af-comentarios" name="comentarios" rows="3"
+                class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"></textarea>
+            </div>
+            <div class="md:col-span-2 flex items-start gap-3">
+              <input id="af-privacy" name="privacy" type="checkbox" required
+                class="mt-1 w-4 h-4 text-primary-600 border-ink-300 rounded focus:ring-primary-500">
+              <label for="af-privacy" class="text-sm text-ink-700">
+                Acepto el <a href="#" class="text-primary-600 hover:underline font-medium">Aviso de Privacidad</a> y autorizo el tratamiento de mis datos personales para fines de afiliación gremial. *
+              </label>
+            </div>
+            <div class="md:col-span-2">
+              <input type="text" name="botcheck" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+              <button type="submit" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
+                Enviar solicitud de afiliación
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= CONTACTO ============= -->
+    <section id="contacto" class="py-24 lg:py-32 bg-white">
+      <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="grid lg:grid-cols-12 gap-12">
+          <div class="lg:col-span-5">
+            <div class="text-sm font-bold text-primary-600 uppercase tracking-wider mb-3">Contacto</div>
+            <h2 class="font-serif font-bold text-h1 text-ink-900 leading-tight tracking-tight mb-6">
+              ¿Tienes dudas o quieres colaborar?
+            </h2>
+            <p class="text-lg text-ink-600 leading-relaxed mb-8 max-w-prose">
+              Escríbenos. Respondemos en menos de 24 hrs hábiles. Si tu consulta requiere atención urgente, marca al teléfono gremial.
+            </p>
+
+            <dl class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center shrink-0">
+                  <i data-lucide="phone" class="w-5 h-5 text-primary-700"></i>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-ink-900">Teléfono gremial</dt>
+                  <dd class="text-ink-600">+52 55 8847 1928</dd>
+                  <dd class="text-xs text-ink-500 mt-1">Lun a Vie, 9:00 a 18:00 hrs</dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center shrink-0">
+                  <i data-lucide="mail" class="w-5 h-5 text-primary-700"></i>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-ink-900">Correo institucional</dt>
+                  <dd class="text-ink-600">contacto@antac.org.mx</dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center shrink-0">
+                  <i data-lucide="map-pin" class="w-5 h-5 text-primary-700"></i>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-ink-900">Sede nacional</dt>
+                  <dd class="text-ink-600">Av. Insurgentes Sur 1234, Piso 7</dd>
+                  <dd class="text-ink-600">Colonia Del Valle, 03100 Ciudad de México</dd>
+                </div>
+              </div>
+            </dl>
+          </div>
+
+          <div class="lg:col-span-7">
+            <form id="form-contacto" class="bg-ink-50 border border-ink-200 rounded-2xl p-8 grid sm:grid-cols-2 gap-6" novalidate>
+              <div class="sm:col-span-2">
+                <h3 class="text-h3 font-bold text-ink-900">Envíanos un mensaje</h3>
+              </div>
+              <div>
+                <label for="co-nombre" class="block text-sm font-medium text-ink-700 mb-1.5">Nombre *</label>
+                <input id="co-nombre" name="nombre" type="text" required
+                  class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+              </div>
+              <div>
+                <label for="co-email" class="block text-sm font-medium text-ink-700 mb-1.5">Correo *</label>
+                <input id="co-email" name="email" type="email" required
+                  class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+              </div>
+              <div>
+                <label for="co-tipo" class="block text-sm font-medium text-ink-700 mb-1.5">Tipo de consulta *</label>
+                <select id="co-tipo" name="tipo_consulta" required
+                  class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+                  <option value="">Selecciona…</option>
+                  <option value="afiliacion">Afiliación</option>
+                  <option value="registro">Registro de unidad/operador</option>
+                  <option value="amparo">Asesoría legal / amparo</option>
+                  <option value="convenio">Convenio comercial</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div>
+                <label for="co-asunto" class="block text-sm font-medium text-ink-700 mb-1.5">Asunto *</label>
+                <input id="co-asunto" name="asunto" type="text" required
+                  class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white">
+              </div>
+              <div class="sm:col-span-2">
+                <label for="co-mensaje" class="block text-sm font-medium text-ink-700 mb-1.5">Mensaje *</label>
+                <textarea id="co-mensaje" name="mensaje" rows="5" required
+                  class="w-full px-4 py-2.5 border border-ink-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white"></textarea>
+              </div>
+              <div class="sm:col-span-2">
+                <input type="text" name="botcheck" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+                <button type="submit" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 rounded-md shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
+                  Enviar mensaje
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="bg-ink-950 text-ink-300 py-16">
+    <div class="max-w-7xl xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div class="grid md:grid-cols-3 gap-12 mb-12">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-primary-600 flex items-center justify-center">
+              <span class="text-white font-bold text-lg">A</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-white">ANTAC</div>
+              <div class="text-[10px] font-medium text-ink-400 tracking-wider uppercase">Transportistas de Carga</div>
+            </div>
+          </div>
+          <p class="text-sm text-ink-400 leading-relaxed max-w-xs">
+            Asociación Civil Mexicana sin fines de lucro. Defendemos al transportista desde 2009.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Navegación</h3>
+          <ul class="space-y-2.5">
+            <li><a href="#quienes" class="text-sm text-ink-400 hover:text-white transition-colors">Quiénes somos</a></li>
+            <li><a href="#historia" class="text-sm text-ink-400 hover:text-white transition-colors">Historia</a></li>
+            <li><a href="#beneficios" class="text-sm text-ink-400 hover:text-white transition-colors">Membresía</a></li>
+            <li><a href="#unidades" class="text-sm text-ink-400 hover:text-white transition-colors">Registro</a></li>
+            <li><a href="#contacto" class="text-sm text-ink-400 hover:text-white transition-colors">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Legal</h3>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-sm text-ink-400 hover:text-white transition-colors">Aviso de privacidad</a></li>
+            <li><a href="#" class="text-sm text-ink-400 hover:text-white transition-colors">Estatutos ANTAC</a></li>
+            <li><a href="#" class="text-sm text-ink-400 hover:text-white transition-colors">Código de ética</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-ink-800 flex flex-col sm:flex-row justify-between gap-4 text-xs text-ink-500">
+        <p>© 2026 ANTAC - Asociación Nacional de Transportistas de Carga A.C.</p>
+        <p>Hecho con compromiso gremial en México.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============= MODALES (3) ============= -->
+  <div id="modal-overlay" class="fixed inset-0 z-50 bg-ink-900/60 backdrop-blur-sm hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl">
+      <div class="sticky top-0 bg-white border-b border-ink-200 px-6 py-4 flex items-center justify-between">
+        <h3 id="modal-title" class="text-xl font-bold text-ink-900">Modal</h3>
+        <button id="modal-close" class="p-2 -mr-2 text-ink-500 hover:text-ink-900 rounded-md" aria-label="Cerrar modal">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="px-6 py-6 prose max-w-none text-ink-700 leading-relaxed">
+        <!-- Content injected by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============= TOAST ============= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[60] hidden max-w-sm">
+    <div class="bg-ink-900 text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-start gap-3 border border-ink-700">
+      <i id="toast-icon" data-lucide="check-circle-2" class="w-5 h-5 text-green-400 shrink-0 mt-0.5"></i>
+      <div class="text-sm leading-snug" id="toast-msg">Mensaje</div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/forms.js" defer></script>
+</body>
+</html>

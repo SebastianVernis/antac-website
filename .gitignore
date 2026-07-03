@@ -1,0 +1,21 @@
+# Backup del HTML original (lo conservo en disco pero no en el repo)
+index.html.original.bak
+assets/img/.originals/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local

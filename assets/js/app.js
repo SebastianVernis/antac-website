@@ -251,7 +251,7 @@
           reveal.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -120px 0px' });
 
     // Aplicar a las secciones principales
     document.querySelectorAll('section').forEach(sec => {

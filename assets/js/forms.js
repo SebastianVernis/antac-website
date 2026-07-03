@@ -15,7 +15,7 @@
   'use strict';
 
   // ====== CONFIGURACIÓN ======
-  const WEB3FORMS_ACCESS_KEY = '16d8dea4-a5a9-419a-a48a-7e77f50d789a';
+  const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_KEY';
   const WEB3FORMS_ENDPOINT   = 'https://api.web3forms.com/submit';
 
   // Cada form tiene su subject diferenciado
